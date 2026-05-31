@@ -10,38 +10,43 @@
  * };
  */
 
- //MORRIS traversal
+ //MORRIS traversal attempt2
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-        vector<int > inorder;
+        if(root == NULL) return{};
+        vector<int> ans ;
         TreeNode* curr = root;
         while(curr != NULL){
-            if(curr->left == NULL){
-                inorder.push_back(curr->val);
-                curr = curr->right;
-            }
 
-            else{
-                TreeNode* prev = curr->left;
-                while(prev->right != NULL && prev->right != curr){
-                    prev = prev->right;
+
+            
+            if(curr->left){
+                TreeNode* rightmost = curr->left;
+                while(rightmost->right != NULL && rightmost->right != curr ){
+                    rightmost = rightmost->right;
                 }
 
-                if(prev->right == NULL){
-                    prev->right = curr;
+                if(rightmost->right == NULL){
+                    rightmost->right = curr;
                     curr = curr->left;
+                    continue;
                 }
 
                 else{
-                    //that means i have already traversed the left sub-tree so i have to break the connection to the root and move toward the right of the root and also just push_back the curr 
-                    prev->right = NULL;
-                    inorder.push_back(curr->val);
+                    ans.push_back(curr->val);
                     curr = curr->right;
+                    rightmost->right = NULL;
+                    continue;
                 }
+            }
+
+            else{
+                ans.push_back(curr->val);
+                curr = curr->right;
             }
         }
 
-        return inorder;
+        return ans;
     }
 };
