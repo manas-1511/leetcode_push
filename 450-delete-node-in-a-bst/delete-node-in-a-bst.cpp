@@ -12,57 +12,45 @@
 class Solution {
 public:
 
-    TreeNode* findRightMost(TreeNode* root){
-        if(root->right == NULL) return root;
-        return findRightMost(root->right);
-
-    }
-
-
     TreeNode* helper(TreeNode* root){
         if(root->right == NULL) return root->left;
         if(root->left == NULL) return root->right;
 
-        TreeNode* rightChild = root->right;
-        TreeNode* rightMost = findRightMost(root->left);
-        rightMost->right = rightChild;
+        TreeNode* rightmost = (root->left);
+        while(rightmost->right != NULL ) rightmost = rightmost->right;
+        rightmost->right = root->right;
 
         return root->left;
     }
+        // 2nd Attempt after 3 days
     TreeNode* deleteNode(TreeNode* root, int key) {
-        //for root
-        if(root == NULL ) return NULL;
-        if(root->val == key) return helper(root);
-        TreeNode* dummy = root;
-        while(root!= NULL){
+        if(root == NULL) return NULL;
+        if(root->val == key){
+            return helper(root);
+        }
 
-            //for left traversal
+        TreeNode* dummy = root;
+        while(root != NULL){
             if(root->val > key){
-                if(root->left != NULL && root->left->val == key){
+                if(root->left && root->left->val == key){
                     root->left = helper(root->left);
-                    break ;
+                    break;
                 }
 
-                else root = root->left;
+                else root =root->left;
             }
 
-
-            //for the right traversal
             else{
-                if(root->right != NULL && root->right->val == key){
+                if(root->right && root->right->val == key){
                     root->right = helper(root->right);
-                    break;
 
+                    break;
                 }
 
                 else root = root->right;
             }
+    }
 
-        }
-        //no else if for returning the dummmy
-        return dummy;
-
-
-                
+    return dummy;
     }
 };
