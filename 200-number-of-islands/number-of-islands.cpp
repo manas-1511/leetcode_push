@@ -1,6 +1,8 @@
 class Solution {
 public:
     void traversal(vector<vector<char>>& grid ,vector<vector<int>> &visited , int i , int j, int m , int n  ){
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
         visited[i][j] = 1;
         //left
         if(j-1>=0 && j-1<n && grid[i][j-1] =='1' && !visited[i][j-1]){
@@ -23,8 +25,7 @@ public:
         
     }
     int numIslands(vector<vector<char>>& grid) {
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
+        
         int m = grid.size();
         vector<vector<int>> visited(m , vector<int>(grid[0].size() , 0));
         int count = 0 ;
