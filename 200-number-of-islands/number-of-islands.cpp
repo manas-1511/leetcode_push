@@ -23,6 +23,8 @@ public:
         
     }
     int numIslands(vector<vector<char>>& grid) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
         int m = grid.size();
         vector<vector<int>> visited(m , vector<int>(grid[0].size() , 0));
         int count = 0 ;
