@@ -1,6 +1,6 @@
 class Solution {
 
-    //memoization
+    //dp with space optimization
 public:
     
     bool canPartition(vector<int>& nums) {
@@ -11,25 +11,25 @@ public:
         if(sum %2 != 0 ) return false;
         int target = sum/2;
         int n= nums.size();
-        vector<vector<int>> dp(n , vector<int>(target+1 ,0));
-        for(int i = 0 ; i < n ; i ++){
-            dp[i][0] = 1;
-        }
-
-        if(nums[0] <= target)dp[0][nums[0]] = 1;
+        vector<int> prev(target+1 , 0) ; 
+        prev[0]= 1;
+        if(nums[0] <= target ) prev[nums[0]] = 1;
         for(int i = 1 ; i < n ; i++){
-            for(int j = 1; j <= target ; j++){
-                bool notTaken = dp[i-1][j];
+            vector<int> curr(target+1 , 0);
+            curr[0] = 1;
+            for(int j = 1 ; j <= target  ; j++){
+                bool notTaken = prev[j];
                 bool taken = false;
-                if(nums[i] <= j){
-                    taken = dp[i-1][j-nums[i]];
-                }
+                if(nums[i] <= j) taken = prev[j-nums[i]];
 
-                dp[i][j] = taken || notTaken;
+                curr[j] = notTaken || taken;
             }
+
+            prev = curr;
+
         }
 
-        return dp[n-1][target];
+        return prev[target];
         
     }
 };
