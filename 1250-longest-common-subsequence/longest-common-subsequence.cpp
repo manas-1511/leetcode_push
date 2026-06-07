@@ -1,34 +1,23 @@
 class Solution {
 public:
+    int f(string &text1, string &text2 , int i , int j  , vector<vector<int>>& dp){
+        if(i < 0 || j < 0) return 0;
+
+        if(dp[i][j] != -1) return dp[i][j] ; 
+
+        if(text1[i] == text2[j]) return dp[i][j] =  1+ f(text1 , text2 , i-1 , j-1 , dp);
+
+        else return dp[i][j] =  max(f(text1 , text2 ,i-1 , j , dp ) , f( text1 , text2 , i , j-1 , dp));
+
+    }
+//memoization
     int longestCommonSubsequence(string text1, string text2) {
         int m = text1.size();
         int n = text2.size();
-        vector<int> prev(n , 0);
-        prev[0] = (text1[0] == text2[0]);
+        
+        vector<vector<int>> dp( m , vector<int>(n ,-1));
+        return f(text1 , text2 , m-1 ,n-1 , dp);
 
-        for(int j = 1; j < n; j++) {
-            prev[j] = prev[j-1] || (text1[0] == text2[j]);
-        }
 
-        for(int i = 1; i < m ; i++){
-            vector<int> curr(n+1 , 0);
-            curr[0] = (text1[i] == text2[0]) || prev[0];
-            for(int j = 1 ; j < n ; j++){
-                if(text1[i] == text2[j]){
-                    curr[j] = 1 + prev[j-1];
-
-                }
-
-                else{
-                    curr[j] = max(prev[j] , curr[j-1]);
-                }
-
-            }
-
-            prev = curr;
-
-        }
-
-        return prev[n-1];
     }
 };
