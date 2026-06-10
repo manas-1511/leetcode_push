@@ -8,20 +8,18 @@ public:
        
 
         for(unsigned long long i = 1; i <= m ; i ++){
-            vector<unsigned long long> curr(n+1 , 0);
-            curr[0] = 1;
-            for(unsigned long long j = 1 ; j<= n ; j++){
+            
+            
+            for(unsigned long long j = n ; j>=1 ; j--){
                 if(s[i-1] == t[j-1]){
-                    curr[j] = prev[j-1] + prev[j];
+                    prev[j] = prev[j-1] + prev[j];
 
                 }
 
-                else{
-                    curr[j] = prev[j];
-                }
+                
             }
 
-            prev = curr;
+            
         }
 
         return prev[n];
