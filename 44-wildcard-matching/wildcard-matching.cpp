@@ -4,9 +4,12 @@ public:
         int m= s.size() , n = p.size();
         vector<int> prev(n+1 , 0);
         prev[0] = 1;
-        if(p[0] == '*') prev[1] = 1;
-        for(int j = 2 ; j <= n ; j ++){
-            if(p[j-1] == '*' && prev[j-1] == 1) prev[j] = 1;
+
+        for(int j = 1 ; j <= n ; j ++){
+            if(p[j-1] == '*'){
+                prev[j] = prev[j-1];
+            }
+            
         }
 
         for(int i = 1 ;i <= m ; i ++){
