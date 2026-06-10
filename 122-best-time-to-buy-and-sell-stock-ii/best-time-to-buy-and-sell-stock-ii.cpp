@@ -1,24 +1,18 @@
 class Solution {
 public:
-    // buy = 1 means  can buy 
-    // buy = 0 means  cannot buy
-    int f(int idx ,int buy , vector<int>& prices , vector<vector<int>>& dp ){
-        int n = prices.size();
-        if(idx==n) return 0;
-        if(dp[idx][buy] != -1) return dp[idx][buy];
-
-        if(buy == 1){
-            return dp[idx][buy] = max(-prices[idx] + f(idx+1 , 0 , prices , dp) , f(idx+1 , 1 , prices , dp));
-        }
-
-        else{
-            return dp[idx][buy] =  max(prices[idx] + f(idx+1 , 1 ,prices , dp) , f(idx+1 , 0 , prices , dp));
-        }
-        
-    }
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        vector<vector<int>> dp(n , vector<int>(2,-1));
-        return f(0 ,1 , prices , dp);
+        vector<vector<int>> dp(2 , vector<int>(n+1,0));
+        
+            for(int j = n-1 ; j >= 0; j--){
+                dp[0][j] = max( prices[j] + dp[1][j+1] , dp[0][j+1]);
+                dp[1][j] = max(-prices[j] + dp[0][j+1] , dp[1][j+1]);
+
+            }
+
+            return dp[1][0];
+        
+
+
     }
 };
