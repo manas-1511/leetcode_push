@@ -1,36 +1,22 @@
 class Solution {
 public:
-    int lengthOfLIS(vector<int>& nums) {
-        vector<int> t = nums;
-        sort(t.begin() , t.end());
-        t.erase(unique(t.begin() , t.end()) , t.end());
+//MEMOISATION
+    int f(int i , int pi ,vector<int>& nums  , vector<vector<int>>& dp){
+        int n = nums.size();
+        if(i == n) return 0;
+        if(dp[i][pi+1] != -1) return dp[i][pi+1];
 
-        int m = nums.size();
-        int n = t.size();
-
-        vector<int> prev(n+1 , 0);
-        for(int i = 1; i <= m ; i++){
-            vector<int> curr(n+1 , 0);
-            for(int j = 1; j <= n ;j ++){
-                if(t[j-1] == nums[i-1]){
-
-                    curr[j] = 1+prev[j-1];
-                }
-
-
-
-
-                else{
-                    curr[j] = max(prev[j] , curr[j-1]);
-                }
-            }
-
-            prev = curr;
-            
+        int notTake = f(i+1 , pi , nums , dp);
+        int take = 0;
+        if(pi == -1 || nums[i] > nums[pi]){
+            take = 1+f(i+1 , i , nums , dp);
         }
 
-        return prev[n];
-
-
+        return dp[i][pi+1] = max(take , notTake);
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> dp(n+1 , vector<int>(n+1 , -1));
+        return f(0,-1 , nums , dp);
     }
 };
