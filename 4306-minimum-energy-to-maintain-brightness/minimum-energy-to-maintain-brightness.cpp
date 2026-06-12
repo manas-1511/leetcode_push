@@ -1,31 +1,27 @@
 class Solution {
 public:
     long long minEnergy(int n, int brightness, vector<vector<int>>& intervals) {
-        long long m = intervals.size();
+        unsigned long long bulbs = (brightness+2)/3;
         sort(intervals.begin() , intervals.end());
-        long long start  = intervals[0][0];
-        long long end  = intervals[0][1];
-        long long len = 0 ;
-        for(long long i = 1 ; i< m ; i ++){
-            long long stcurr = intervals[i][0];
-            long long endcurr = intervals[i][1];
-
-            if(stcurr<= end){
-                end = max(end , endcurr);
+        unsigned long long start = intervals[0][0];
+        unsigned long long end = intervals[0][1];
+        unsigned long long len = 0 ;
+        for(auto& i : intervals){
+            unsigned long long scurr = i[0];
+            unsigned long long ecurr = i[1];
+            if(scurr <= end){
+                end = max(end , ecurr);
             }
 
             else{
                 len += end-start+1;
-                start = stcurr ;
-                end = endcurr;
+                start = scurr;
+                end = ecurr;
             }
         }
 
-        len += end-start+1;
+        len+=end-start+1;
 
-        if(brightness ==1 || brightness == 2 || brightness ==3) return len;
-        if(brightness%3 == 0) return len*(brightness/3);
-        return ((brightness/3)+1)*len;
-        
+        return bulbs*len;
     }
 };
