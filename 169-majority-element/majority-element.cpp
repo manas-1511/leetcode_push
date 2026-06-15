@@ -1,22 +1,32 @@
 class Solution {
 public:
+        //MOORE's Algorihtm in this we will be creating section of arrays
+        //first consider the element to be a majority and then propogate through by cnt++ or cnt--
     int majorityElement(vector<int>& nums) {
-        int n = nums.size();
-        unordered_map<int , int> mpp;
-        for(int i = 0 ; i < n ; i ++){
-            mpp[nums[i]] ++;
-        }
+        int n= nums.size();
+        int ele = nums[0]; 
+        int cnt = 1 ;
+        for(int i = 1 ; i<n ; i ++){
+            //cnt == 0 then change the element
 
-        int ans = -1;
-        int mx = 0 ;
-        for(auto& it : mpp){
-            if(mx < it.second){
-                mx = it.second;
-                ans = it.first;
+            if(cnt == 0) {
+                ele = nums[i];
+                cnt = 1;
             }
+
+            else if(cnt != 0){
+                if(ele == nums[i]) cnt++;
+                else cnt--;
+            }  
+        }
+        int check = 0 ;
+        for(int i = 0 ; i < n ; i ++){
+            if(nums[i] == ele) check++;
         }
 
-        return ans;
+        if(check>n/2) return ele;
+        return -1;
+
 
     }
 };
