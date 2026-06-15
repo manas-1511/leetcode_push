@@ -1,26 +1,35 @@
 class Solution {
 public:
-    //for the brute force method simply create 
+
+       
     void nextPermutation(vector<int>& nums) {
-        next_permutation(nums.begin() , nums.end());
-        // vector<vector<int>> all;
-        // do{
-        //     all.push_back(nums);
-        // }while(next_permutation(nums.begin() , nums.end()));
+        int n = nums.size();
+        if(n == 1) return;
+        int breakpoint = -1;
+            //have to find the break point
+        for(int i = n-2 ; i >= 0 ; i --){
+            if(nums[i] < nums[i+1]){
+                breakpoint = i;
+                break;
 
-        // for(int i = 0 ; i < all.size() ; i++){
-        //     if(all[i] == nums){
-        //         //if it is the last permu.
-        //         if(i == all.size()-1){
-        //             nums =  all[0];
-        //             break;
-        //         }
+                    
+            }
+        }
+            if(breakpoint == -1){
+                sort(nums.begin() , nums.end());
+                return;
+            }
+        int mnIndex =breakpoint+1;
+                for(int j = breakpoint+1 ; j < n ; j++){
+                    if(nums[j] > nums[breakpoint]){
+                        if(nums[mnIndex] > nums[j]){
+                            mnIndex = j;
+                        }
+                    }
+                }
 
-        //         else{
-        //              nums =  all[i+1];
-        //              break;
-        //         }
-        //     }
-        // }
+                swap(nums[breakpoint] , nums[mnIndex]);
+
+                sort(nums.begin()+breakpoint+1 , nums.end());
     }
 };
