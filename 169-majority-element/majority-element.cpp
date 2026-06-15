@@ -2,6 +2,7 @@ class Solution {
 public:
         //MOORE's Algorihtm in this we will be creating section of arrays
         //first consider the element to be a majority and then propogate through by cnt++ or cnt--
+        //TC = O(n) SC = O(1)
     int majorityElement(vector<int>& nums) {
         int n= nums.size();
         int ele = nums[0]; 
@@ -19,13 +20,14 @@ public:
                 else cnt--;
             }  
         }
-        int check = 0 ;
-        for(int i = 0 ; i < n ; i ++){
-            if(nums[i] == ele) check++;
-        }
+        // int check = 0 ;
+        // for(int i = 0 ; i < n ; i ++){
+        //     if(nums[i] == ele) check++;
+        // }
 
-        if(check>n/2) return ele;
-        return -1;
+        // if(check>n/2) 
+        return ele;
+        // return -1;
 
 
     }
