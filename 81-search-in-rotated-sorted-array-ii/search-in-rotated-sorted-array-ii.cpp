@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool search(vector<int>& nums, int target) {
+        int n = nums.size();
+        int low = 0 ; 
+        int high = n-1;
+
+        while(low<= high){
+            int mid =(low+high)/2;
+            if(nums[mid] == target ) return true;
+            //check if the left portion is sorted so that we can give the verdit that the target is present in the left side or not
+            if(nums[high] == nums[mid] && nums[low] == nums[mid]){
+                //if onlyy the  high and low are equal still you will be able to identify which side to go 
+                low++;high--;
+                continue;
+            }
+            if(nums[low] <= nums[mid]){
+                if(nums[low] <= target  && target < nums[mid] ){
+                    high = mid-1;
+                }
+
+                else{
+                    low = mid+1;
+                }
+            }
+
+            else{
+                if(nums[high] >= target && nums[mid] < target){
+                    low = mid+1;
+                }
+
+                else high = mid-1;
+            }
+        }
+
+        return false;
+    }
+};
