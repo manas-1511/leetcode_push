@@ -1,5 +1,6 @@
 class Solution {
 public:
+    //this was using the pathvis and vis 
     bool checkdfs(int i ,vector<vector<int>>& adj , vector<int>& vis , vector<int> pathvis ){
         vis[i] = 1;
         pathvis[i] = 1;
