@@ -3,20 +3,18 @@ public:
     int minDays(vector<int>& bloomDay, int m, int k) {
         int n = bloomDay.size();
 
-        int low = 1;
+        int low =  *min_element(bloomDay.begin(), bloomDay.end());
         int high = *max_element(bloomDay.begin() , bloomDay.end());
         int min_day = 0 ; 
         while(low<=high){
             int mid = (low+high)/2;
-            vector<int> done(n, 0);
-            for(int i = 0 ; i< n ; i++){
-                if(bloomDay[i] <= mid) done[i] = 1;
-            }
+
+            
 
             int cnt = 0 ;
             int totalB = 0 ;
             for(int i = 0 ; i < n;  i++){
-                if(done[i] == 1) cnt++;
+                if(bloomDay[i] <= mid) cnt++;
                 else{
                     //reset the cnt = 0  and check how many bouquets you were able to form , form the prev streak of bouquets
                     totalB += cnt/k;
