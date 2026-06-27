@@ -7,6 +7,8 @@ public:
 
         int min  = 0 ; 
         int max = 0;
+        //min and max are the range on cnt 
+        //( --> cnt++     ) ---> cnt--
         for(int i = 0 ; i < s.size() ; i++){
             if(s[i] == '('){
                 min++;
@@ -14,14 +16,18 @@ public:
             }
 
             else if(s[i] == ')'){
-                if(min >0) min--;
+                 min--;
                 max--;
             }
 
             else{
-                if(min >0)min--;
+                min--;
                 max++;
             }
+            
+            //making min = 0 if neg because max may be +ve
+            if(min < 0 ) min = 0;
+            //but if max also goes -ve then there is no way it's valid 
 
             if(max<0) return false;
         }
