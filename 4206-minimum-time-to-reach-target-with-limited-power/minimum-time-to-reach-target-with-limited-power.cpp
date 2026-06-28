@@ -21,18 +21,22 @@ public:
             long long d = it[0] ; long long  u = it[1] ; long long rem = it[2];
 
             if(d > dis[u][rem]) continue;
-            if(rem < cost[u]) continue;
+            //therefore this distance is outdated 
+            if(rem < cost[u]) //that means you cannot go anywhere because you have no power left
+            continue;
 
-            // 2. THE TLE FIX: Early Exit!
+            // THE TLE FIX: Early Exit
             // If we already found the target, and this new path takes LONGER, 
             // we can stop entirely because all future paths will only be longer.
 
             if (bestt != -1 && d > bestt) break;
             if(u == target){
                         if(bestt == -1) bestt = d;
-                        else bestt = min(bestt , d);
+                        // else bestt = min(bestt , d);
                         bestp = max(bestp , rem);
                         continue;
+                        //because after reaching the target there is no need to traverse any further with 
+                        //this node
                         
                     
                     }
@@ -50,19 +54,18 @@ public:
             }
         }
 
-long long ans1 = LLONG_MAX;
-        long long ans2 = LLONG_MIN;
-        for(int i = 0 ; i <= power ; i++){
-            if(dis[target][i] != LLONG_MAX && ans1 >= dis[target][i]){
-                ans1 = dis[target][i];
-                ans2 = i;
+
+
+        long long btime = LLONG_MAX; long long bp = -1;
+        for(int i = 0 ; i <= power ; i ++){
+            if(dis[target][i] <= btime){
+                btime = dis[target][i];
+                bp = i;
             }
         }
 
-        // If ans1 is still LLONG_MAX, the target was unreachable.
-        if (ans1 == LLONG_MAX) return {-1, -1};
-        
-        return {ans1, ans2};
+        if(btime == LLONG_MAX) return {-1 , -1};
+        return {btime , bp};
 
     }
 };
