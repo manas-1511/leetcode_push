@@ -14,7 +14,7 @@ public:
         while(i < n){
 
             // if i have got the flat slope
-            if(ratings[i] == ratings[i-1]){
+            while(i < n && ratings[i] == ratings[i-1]){
                 // no conditon for the ones having same ratings
                 sum+=1 ; i++;
             }
