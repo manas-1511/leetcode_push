@@ -1,24 +1,45 @@
 class Solution {
 public:
+    //brute : S: O(3N)
+    //better : S: O(N)
+    //opti : S: O(1)
     int candy(vector<int>& ratings) {
         int n = ratings.size();
-        vector<int> left(n , 1);
-        vector<int> right(n , 1);
-        for(int i = 1; i < n ; i ++){
-            if(ratings[i-1] < ratings[i] ) left[i] = left[i-1]+1;
-            else if(ratings[i-1] >= ratings[i]) left[i] = 1;
+        int i = 1; 
+        int sum = 1 ;
+        //no matter what we initially assigned the first child with 1 candy 
+        //if the downhill starts form the starting itself than the while loop will handle it
+        //sum+=down-peak
+
+        while(i < n){
+
+            // if i have got the flat slope
+            if(ratings[i] == ratings[i-1]){
+                // no conditon for the ones having same ratings
+                sum+=1 ; i++;
+            }
+                // going increasing slope
+                int peak = 1;
+            while(   i <n  && ratings[i-1] < ratings[i]){
+                peak++;
+                sum+=peak ;
+                i++;
+
+            }
+
+            int down = 0;
+            while(i < n && ratings[i-1] > ratings[i]){
+                down++;
+                sum+=down;
+                i++;
+
+            }
+
+            if(down+1 > peak){
+                sum+=down+1-peak;
+            }
         }
 
-        for(int i = n-2; i>= 0 ; i--){
-            if(ratings[i] > ratings[i+1] ) right[i]=right[i+1]+1;
-            else right[i] = 1;
-        }
-        int ans = 0;
-        for(int i = 0 ; i < n ; i++){
-            ans += max(left[i] , right[i]);
-        }
-
-        return ans;
-        
+        return sum;
     }
 };
