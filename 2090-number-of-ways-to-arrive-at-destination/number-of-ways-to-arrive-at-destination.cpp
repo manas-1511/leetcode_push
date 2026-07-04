@@ -22,9 +22,7 @@ public:
             pq.pop();
 
             if(d > dis[node]) continue;
-            if(node == n-1){
-                continue;
-            }
+            
             for(auto& it : adj[node]){
                 ll newNode = it.first;
                 ll w = it.second;
