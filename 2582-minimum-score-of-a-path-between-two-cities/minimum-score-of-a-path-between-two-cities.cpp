@@ -8,12 +8,15 @@ public:
         }
         //dis , node
         //dis = here is the min road length encountered till now
-        queue<pair<int , int>> q;
+        // queue<pair<int , int>> q;
+        priority_queue<pair<int , int> , vector<pair<int , int>> , greater<pair<int , int>>> pq;
         vector<int> dis(n+1 , INT_MAX);
-        q.push({INT_MAX , 1});
-        while(!q.empty()){
-            auto [d , node] = q.front();
-            q.pop();
+        pq.push({INT_MAX , 1});
+        while(!pq.empty()){
+            auto [d , node] = pq.top();
+            pq.pop();
+
+            //we should use pq to reduce the inefficient traversal through the roads 
 
             for(auto& it : adj[node]){
                 int newNode = it.first;
@@ -25,7 +28,7 @@ public:
                 int min_road_till_now = min(w , d);
                 if(min_road_till_now < dis[newNode]){
                     dis[newNode] = min_road_till_now;
-                    q.push({dis[newNode] , newNode});
+                    pq.push({dis[newNode] , newNode});
                 }
 
             }
