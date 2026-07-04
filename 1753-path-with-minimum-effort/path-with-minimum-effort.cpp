@@ -16,8 +16,7 @@ public:
             vector<int> temp = pq.top();
             pq.pop();
             int e = temp[0] ; int r = temp[1]; int c = temp[2];
-                //remopve the outdated nodes having higger distances 
-            // if(e > dis[r][c]) continue;
+                
             if(r == m-1 && c == n-1){
                 //target has been achieved with min effort because it has came out of the pq 
                 //therefore no other path is left uncovered which has shorter effort to rach the dis
@@ -29,9 +28,16 @@ public:
                 int nc = c+dc[i];
 
                 if(nr>= 0 && nr<m && nc >=0 && nc < n ){
+                    // Calculate the effort required to move to the new cell
+                    
+
+                    
                     int current_effort = abs(h[r][c] - h[nr][nc]);
                     int max_current_effort = max(current_effort , e);
 
+
+
+                    // If the calculated effort is less, update and push to the queue
                     if(max_current_effort < dis[nr][nc]){
                         //even if it is equal i should not push it
                         //even if the target has been reached then also i should push it 
