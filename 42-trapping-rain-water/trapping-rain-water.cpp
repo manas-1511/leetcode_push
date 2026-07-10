@@ -23,7 +23,8 @@ public:
             else{
                 //now the arr[r] > arr[l] i have to decrease r-- and before moving have to check 
                 //whether that cell can contain water or not just by checking the right side 
-                //not the left side bcz the left side has already larger or equal walls than rmax 
+                //not the left side bcz the left side has already larger or equal walls than rmax
+                //since we are only shrinking the window form the side having lower heights  
                 //if rcurr < rmax then the water can be stored 
                 if(rmax > arr[r]) total+=rmax-arr[r];
                 else rmax = arr[r];
