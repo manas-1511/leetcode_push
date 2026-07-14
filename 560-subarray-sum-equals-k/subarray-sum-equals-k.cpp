@@ -16,7 +16,7 @@ public:
                     cnt+=prefixSumMap[rem];
                 }
 
-            //its not present in the map then add it 
+            //its  present or not present in the map just add it
             
                 prefixSumMap[sum]++;
             
