@@ -1,29 +1,66 @@
+class DisjointUnion{
+    public:
+    int n ;
+    vector<int> parent , rank;
+
+    DisjointUnion(int n ){
+        parent.resize(n);
+        rank.resize(n, 0);
+
+        for(int i = 0 ; i < n ; i++){
+            parent[i] = i;
+        }
+    }
+
+    int findUPar(int i){
+        if(parent[i] == i) return i;
+        else{
+            return parent[i] = findUPar(parent[i]);
+        }
+    }
+
+    void unionByRank(int u , int v){
+        int ulp_u = parent[u];
+        int ulp_v = parent[v];
+        if(ulp_u == ulp_v) return;
+        if(rank[ulp_u] < rank[ulp_v]){
+            parent[ulp_u] = ulp_v;
+        }
+
+        else if(rank[ulp_u] < rank[ulp_v]){
+            parent[ulp_v] = ulp_u;
+        }
+
+        else{
+            parent[ulp_v] = ulp_u;
+            rank[ulp_u]++;
+        }
+    }
+};
+
 class Solution {
 public:
-    void dfs(int i  , vector<int>& vis , vector<vector<int>>& adj){
-        vis[i] = 1;
-        for(auto& it: adj[i]){
-            if(!vis[it]) dfs(it , vis , adj);
-        }
-
-        
-    }
     int makeConnected(int n, vector<vector<int>>& connections) {
-        vector<vector<int>> adj(n);
+        DisjointUnion ds(n);
+        int extraEdges = 0;
         for(auto& e: connections){
-            adj[e[0]].push_back(e[1]);
-            adj[e[1]].push_back(e[0]);
-        }
-                int comp = 0 ;
-            vector<int> vis(n, 0);
-        for(int i = 0 ; i < n ; i++){
-            if(!vis[i]){
-                dfs(i , vis , adj);
-                comp++;
+            int u = e[0];
+            int v = e[1];
+            if(ds.findUPar(u) == ds.findUPar(v)){
+                extraEdges++;
+            }
+
+            else{
+                ds.unionByRank(u ,v);
             }
         }
+            int comp = 0 ;
+        for(int i = 0 ; i < n ; i++){
+            if(ds.parent[i] == i) comp++;
+        }
 
-        if(connections.size() < n-1) return -1;
-        return comp-1;
+
+        if(comp-1 <= extraEdges) return  comp-1;
+        return -1;
     }
 };
