@@ -1,40 +1,43 @@
 class Solution {
 public:
     int largestRectangleArea(vector<int>& nums) {
-        // brute force ap. 
-        //take out the nse pse for each ele and that 
-        // use (nse-pse-1)*arr[i]
-
-        //now the optimal approach
+        // most optimal approach 
         int n = nums.size();
-        stack<int> st; //storing the index
-        int maxArea = 0;
-        for(int i = 0 ; i < n; i ++){
-            while(!st.empty() && nums[st.top()] > nums[i]){
-                //that means the element at the top has now found its nse since
-                //nums[i] < st.top() now update area for this height since the pse
-                //can always be found out as we are traversing through the left
-                //already seen the prev element so we have the idea of pse al the time 
-                int eleIndex  = st.top() ; 
-                st.pop();
-                int nse = i;
-                int pse = (st.empty()) ? -1 :st.top();
-                maxArea = max(maxArea , (nse-pse-1)*nums[eleIndex]);
-
+        //pse , nse;
+        stack<int> st;
+        int mx = 0;
+        for(int i = 0 ; i < n ; i++){
+            if(st.empty()){
+                st.push(i);
             }
 
-            st.push(i);
-        }
-            //if something is still left in the stack that indicates we have got no nse for them
-        while(!st.empty()){
-            int eleIndex  = st.top() ; 
-            st.pop();
-            int nse = n ; 
-            int pse = (st.empty()) ? -1 : st.top();
-                maxArea = max(maxArea , (nse-pse-1)*nums[eleIndex]);
+            else{
+                while( !st.empty() && nums[i] < nums[st.top()]){
+                    //then i have got the nse for the st.top therefore have to pop it out 
+                    int node = st.top();
+                    st.pop();
+                    int pse = (st.empty()) ? -1 : st.top();
+                    int nse = i;
+
+                    int area = (nse-pse-1)*nums[node];
+                    mx = max(mx , area);
+                }
+
+                st.push(i);
+            }
         }
 
-        return maxArea;
+
+        while(!st.empty()){
+            int node = st.top();
+            st.pop();
+            int nse = n;
+            int pse = (st.empty()) ? -1 : st.top();
+            int area = (nse-pse-1)*nums[node];
+            mx = max(mx , area);
+        }
+
+        return mx;
 
     }
 };
