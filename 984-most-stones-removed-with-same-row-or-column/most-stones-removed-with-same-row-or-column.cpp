@@ -79,7 +79,7 @@ public:
         for(auto& it : stones){
             int row = it[0];
             int col = maxRow+it[1]+1;
-            ds.unionByRank(row , col);
+            ds.unionBySize(row , col);
             stoneNode[row] = 1;
             stoneNode[col] = 1;
 
