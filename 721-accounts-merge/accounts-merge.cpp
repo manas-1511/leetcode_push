@@ -7,12 +7,12 @@ class DisjointUnion{
 
     vector<int> parent;
     vector<int> rank;
-    vector<int> size;
+    // vector<int> size;
 
     DisjointUnion(int n){
         parent.resize(n);
         rank.resize(n , 0);
-        size.resize(n,1);
+        // size.resize(n,1);
         for(int i = 0 ; i< n ; i++){
             parent[i] = i;
         }
