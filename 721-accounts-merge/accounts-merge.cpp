@@ -42,26 +42,26 @@ class DisjointUnion{
         }
     }
 
-    void unionBySize(int u , int v){
-        int ulp_u = findUpar(u);
-        int ulp_v = findUpar(v);
+    // void unionBySize(int u , int v){
+    //     int ulp_u = findUpar(u);
+    //     int ulp_v = findUpar(v);
 
-        if(ulp_u == ulp_v) return ;
-        if(size[ulp_u] > size[ulp_v]){
-            parent[ulp_v] = ulp_u;
-            size[ulp_u]+=size[ulp_v];
-        }
+    //     if(ulp_u == ulp_v) return ;
+    //     if(size[ulp_u] > size[ulp_v]){
+    //         parent[ulp_v] = ulp_u;
+    //         size[ulp_u]+=size[ulp_v];
+    //     }
 
-        else if(size[ulp_u] < size[ulp_v]){
-            parent[ulp_u] = ulp_v;
-            size[ulp_v]+=size[ulp_u];
-        }
+    //     else if(size[ulp_u] < size[ulp_v]){
+    //         parent[ulp_u] = ulp_v;
+    //         size[ulp_v]+=size[ulp_u];
+    //     }
 
-        else {
-            parent[ulp_u] = ulp_v;
-            size[ulp_v]+=size[ulp_u];
-        }
-    }
+    //     else {
+    //         parent[ulp_u] = ulp_v;
+    //         size[ulp_v]+=size[ulp_u];
+    //     }
+    // }
 
 
 
